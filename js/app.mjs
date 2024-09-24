@@ -15,6 +15,15 @@ const pageEl = document.querySelector('.page-a');
 
 const setTextareaStyle = (attrib, v) => (pageEl.style[attrib] = v);
 
+// Exported functions in ES Module syntax
+export function showSidebar() {
+  document.querySelector('.sidebar').classList.add('open');
+}
+
+export function hideSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+}
+
 /**
  * Add event listeners here, they will be automatically mapped with addEventListener later
  */

@@ -1,0 +1,119 @@
+/* Navigation Bar */
+nav {
+    background-color: #f1efe7;
+    width: 100%;
+    /* padding: 10px 0; */
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #ece7d1;
+    border-radius: 4px;
+}
+
+.logo img {
+    height: 100px;
+    width: 110px;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 20px;
+    transition: right 0.3s ease-in-out;
+}
+
+.sidebar.show {
+    right: 0;
+}
+
+.sidebar li {
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.sidebar a {
+    width: 100%;
+    text-align: left;
+}
+
+/* Mobile Menu Button */
+.menu-button {
+    display: none;
+}
+
+/* Media Queries */
+@media(max-width: 800px) {
+    .hideOnMobile {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .logo {
+        text-align: center;
+    }
+}
+
+@media(max-width: 400px) {
+    .sidebar {
+        width: 60%;
+    }
+
+    .logo {
+        text-align: center;
+    }
+}
+
+/* Footer */
+footer {
+    background-color: #121212;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  footer .mail {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  footer .mail img {
+    margin-right: 10px;
+  }

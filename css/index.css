@@ -43,10 +43,11 @@ body.dark {
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: var(--background-primary);
   color: var(--font-color-primary);
-  padding: 100px 100px;
+  
   font-size: 1.05rem;
   font-family: var(--font-family-primary);
 }
@@ -77,7 +78,7 @@ label {
 
 label.block {
   display: block;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
 }
 
 select {
@@ -163,15 +164,7 @@ ul.info-ul > li {
   color: var(--primary-button-color);
   font-size: 1rem;
 }
-.github-corner {
-  position: absolute;
-  top: 0;
-  z-index: 99999;
-  right: 0px;
-}
-body.dark .github-corner {
-  filter: invert(100%);
-}
+
 .imp-button {
   color: var(--font-color-primary);
   border: 1px solid var(--font-color-primary);
@@ -334,10 +327,16 @@ body.dark .github-corner {
   padding: 58px 0px;
   text-align: center;
 }
+@media (min-width: 768px){
+  main {
+    padding: 100px 100px;
+  }
+}
 
 @media (max-width: 768px) {
+  
   body {
-    padding: 100px 10px;
+    padding: 0px 10px;
   }
   h1 {
     margin-top: 20px;
@@ -383,7 +382,11 @@ body.dark .github-corner {
   .contributor-username {
     font-size: 9pt;
   }
+
+  
 }
+
+
 
 fieldset {
   padding: 17px 20px;
@@ -469,3 +472,5 @@ input[type='file']::before {
     margin-top: 10px;
   }
 }
+
+
