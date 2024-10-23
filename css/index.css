@@ -82,7 +82,6 @@ label.block {
 }
 
 select {
-  
   width: 100%;
   max-width: 100%;
   padding: 10px;
@@ -115,9 +114,8 @@ option {
   color: #333;
 }
 
-body.dark select {
-  background: url('../images/dropdown-white.svg') no-repeat;
-  background-position: calc(100% - 14px) center;
+body.dark select { 
+  background:no-repeat;
 }
 
 input {
@@ -200,19 +198,6 @@ ul.info-ul > li {
   min-height: calc(100% - 50px);
 }
 
-.sponsor-name-section {
-  padding: 50px 0px;
-}
-.sponsor-container {
-  display: inline-block;
-  color: var(--font-color-primary);
-}
-.sponsor-title {
-  display: block;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: bold;
-}
 
 .page-a {
   width: 400px;
