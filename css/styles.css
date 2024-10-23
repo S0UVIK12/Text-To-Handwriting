@@ -22,11 +22,6 @@ nav a {
     transition: background-color 0.3s;
 }
 
-nav a:hover {
-    background-color: #ece7d1;
-    border-radius: 4px;
-}
-
 .logo img {
     height: 100px;
     width: 110px;
@@ -57,7 +52,7 @@ nav a:hover {
 
 .sidebar li {
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px;
 }
 
 .sidebar a {

@@ -82,15 +82,33 @@ label.block {
 }
 
 select {
-  background: url('../images/dropdown.svg') no-repeat;
-  background-position: calc(100% - 14px) center;
-  border: none;
-  color: #333;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  display: block;
-  -moz-appearance: none;
-  -webkit-appearance: none;
+  
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .responsive-select {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-select {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+}
+/* Add hover effect for better UX */
+.responsive-select:hover {
+  border-color: #888;
 }
 
 option {
@@ -116,8 +134,8 @@ input[type='number']::-webkit-inner-spin-button {
   margin: 0;
 }
 input[type='number'] {
-  -moz-appearance: textfield !important;
-  -webkit-appearance: none;
+  appearance: textfield !important;
+  appearance: none;
   width: 100%;
 }
 
@@ -418,7 +436,7 @@ input[type='file']::before {
   display: inline-block;
   background-color: var(--background-primary);
   white-space: nowrap;
-  -webkit-user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
