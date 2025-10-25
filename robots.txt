@@ -1,0 +1,22 @@
+# Textor - Text to Handwriting Converter
+# Robots.txt file
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private directories (if any)
+Disallow: /tests/
+Disallow: /node_modules/
+Disallow: /.git/
+
+# Allow all CSS, JS, and images
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /fonts/
+
+# Sitemap location
+Sitemap: https://www.textor.co.in/sitemap.xml
+
+# Crawl-delay (optional, helps with server load)
+Crawl-delay: 1
