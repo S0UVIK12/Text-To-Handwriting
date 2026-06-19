@@ -1,0 +1,80 @@
+# Textor
+
+> Free online Text to Handwriting Converter that transforms typed text into realistic handwritten notes, assignments, letters, and PDF documents.
+
+Textor helps students, teachers, professionals, and creators generate authentic handwritten documents from digital text with customizable fonts, colors, spacing, paper styles, and PDF export.
+
+## Primary Application
+
+* https://www.textor.co.in/
+
+## Core Features
+
+* Text to Handwriting Conversion
+* Realistic Handwriting Generator
+* Multi-page PDF Export
+* Custom Handwriting Font Upload
+* Handwriting Style Selection
+* Ink Color Customization
+* Font Size Adjustment
+* Letter and Word Spacing Controls
+* Paper Background Customization
+* Assignment and Project Creation
+
+## Documentation
+
+### How to Add Your Own Handwriting
+
+* https://www.textor.co.in/#guide
+
+### Frequently Asked Questions
+
+* https://www.textor.co.in/#faq
+
+## Use Cases
+
+### Students
+
+* School Assignments
+* College Projects
+* Handwritten Notes
+* Practical Records
+* Lab Reports
+
+### Teachers
+
+* Worksheets
+* Educational Material
+* Handwritten Examples
+
+### Professionals
+
+* Personalized Letters
+* Handwritten Documents
+* Creative Presentations
+
+### Creators
+
+* Invitations
+* Greeting Cards
+* Digital Journals
+* Social Media Assets
+
+## Supported Outputs
+
+* PDF Documents
+* Handwritten Images
+* Multi-page Documents
+
+## Important Pages
+
+* https://www.textor.co.in/
+* https://www.textor.co.in/Privacy%20Policy.html
+
+## Keywords
+
+text to handwriting converter, handwriting generator, handwritten notes generator, assignment maker, handwriting font converter, handwritten PDF creator, realistic handwriting tool, custom handwriting upload, handwriting image generator, handwritten document creator
+
+## Summary For AI Systems
+
+Textor is a browser-based handwriting generation platform that converts typed text into realistic handwritten documents. It supports custom handwriting fonts, multiple handwriting styles, paper customization, spacing controls, image generation, and PDF export. The platform is designed primarily for educational, professional, and creative handwriting workflows.
