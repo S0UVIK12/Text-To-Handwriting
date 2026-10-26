@@ -64,7 +64,7 @@ function removePaperStyles() {
 function renderOutput(outputImages) {
   if (outputImages.length <= 0) {
     document.querySelector('#output').innerHTML =
-      'Click "Generate Image" Button to generate new image.';
+      'Click "Generate Image" to create your handwritten pages.';
     document.querySelector('#download-as-pdf-button').classList.remove('show');
     document.querySelector('#delete-all-button').classList.remove('show');
     return;
@@ -80,31 +80,35 @@ function renderOutput(outputImages) {
       style="position: relative;display: inline-block;"
     >
       <button 
+        type="button"
         data-index="${index}" 
+        aria-label="Remove page ${index + 1}"
         class="close-button close-${index}">
           &times;
       </button>
       <img 
         class="shadow" 
-        alt="Output image ${index}" 
+        alt="Generated handwriting page ${index + 1}" 
         src="${outputImageCanvas.toDataURL('image/jpeg')}"
       />
       <div style="text-align: center">
         <a 
           class="button download-image-button" 
           download 
-          href="${outputImageCanvas.toDataURL('image/jpeg')}
-        ">Download Image</a>
+          href="${outputImageCanvas.toDataURL('image/jpeg')}"
+        >Download Image</a>
         <br/>
         <br/>
 
         <button 
+          type="button"
           class="button move-left"
           data-index="${index}" 
         >
           Move Left
         </button>
         <button 
+          type="button"
           class="button move-right"
           data-index="${index}" 
         >
