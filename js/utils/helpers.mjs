@@ -1,3 +1,5 @@
+import { paperOf, mmToPt } from './paper.mjs';
+
 const pageEl = document.querySelector('.page-a');
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -15,38 +17,40 @@ function addFontFromFile(fileObj) {
 
 /**
  * @method createPDF
- * @param imgs array of images (in base64)
+ * @param canvases generated page canvases
  * @description
- * Creates PDF from list of given images
+ * Creates a PDF with one page per image. Each page uses the paper size the
+ * image was generated with (A4, A5, Letter or Legal) and the image fills it.
  */
-function createPDF(imgs) {
+function createPDF(canvases) {
+  if (!canvases.length) return;
+  const sizeOf = (canvas) => {
+    const paper = paperOf(canvas.dataset && canvas.dataset.paper);
+    return [mmToPt(paper.w), mmToPt(paper.h)];
+  };
+  const [firstW, firstH] = sizeOf(canvases[0]);
   // eslint-disable-next-line new-cap
-  const doc = new jsPDF('p', 'pt', 'a4');
-  const width = doc.internal.pageSize.width;
-  const height = doc.internal.pageSize.height;
-  for (const i in imgs) {
-    doc.text(10, 20, '');
-    doc.addImage(
-      imgs[i],
-      'JPEG',
-      25,
-      50,
-      width - 50,
-      height - 80,
-      'image-' + i
-    );
-    if (i != imgs.length - 1) {
-      doc.addPage();
-    }
-  }
-  doc.save();
+  const doc = new jsPDF({ unit: 'pt', format: [firstW, firstH], orientation: 'p' });
+  canvases.forEach((canvas, i) => {
+    const [w, h] = sizeOf(canvas);
+    if (i > 0) doc.addPage([w, h], 'p');
+    doc.addImage(canvas, 'JPEG', 0, 0, w, h, 'image-' + i);
+  });
+  doc.save('textor-handwriting.pdf');
 }
 
+const escapeHtml = (text) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 function formatText(event) {
+  // image pastes are handled (and prevented) by editor.mjs
+  if (event.defaultPrevented) return;
   event.preventDefault();
-  const text = event.clipboardData
-    .getData('text/plain')
-    .replace(/\n/g, '<br/>');
+  // Plain text only. Escape it, otherwise pasted "<b>" would turn into HTML.
+  const text = escapeHtml(event.clipboardData.getData('text/plain')).replace(
+    /\r?\n/g,
+    '<br/>'
+  );
   document.execCommand('insertHTML', false, text);
 }
 

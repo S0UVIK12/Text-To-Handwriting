@@ -65,6 +65,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/index.css" />
   <link rel="stylesheet" href="./css/features.css" />
+  <link rel="stylesheet" href="./css/editor.css" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -107,7 +108,12 @@
           "Custom handwriting font upload (TTF/OTF)",
           "Multi-page PDF export",
           "Ink color, font size and spacing controls",
-          "Ruled paper and margin options",
+          "Rich text editor with per-selection fonts, sizes and colors",
+          "Insert, resize and position images on the page",
+          "A4, A5, Letter and Legal paper with adjustable page gaps",
+          "Ruled, grid, dotted and blank paper templates",
+          "Live multi-page preview and manual page breaks",
+          "Drawing tools with pen, eraser, shapes and undo",
           "Hindi, Urdu, Arabic, Chinese, Japanese and Korean fonts",
           "Dark mode"
         ]
@@ -250,6 +256,77 @@
               <label class="block" id="note-label">Type or paste your text here</label>
             </div>
 
+            <div id="editor-toolbar" class="editor-toolbar" role="toolbar" aria-label="Text formatting" aria-controls="note">
+              <div class="tb-group">
+                <button type="button" class="tb-btn" data-cmd="undo" aria-label="Undo" title="Undo"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M5 3 2 6l3 3M2 6h7a4 4 0 0 1 0 8H6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="redo" aria-label="Redo" title="Redo"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m11 3 3 3-3 3M14 6H7a4 4 0 0 0 0 8h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+              <div class="tb-group">
+                <select id="fmt-block" class="tb-select" aria-label="Paragraph style" title="Paragraph style">
+                  <option value="p">Normal</option>
+                  <option value="h1">Heading 1</option>
+                  <option value="h2">Heading 2</option>
+                  <option value="h3">Heading 3</option>
+                  <option value="blockquote">Quote</option>
+                </select>
+              </div>
+              <div class="tb-group">
+                <button type="button" class="tb-btn" data-cmd="bold" aria-label="Bold" title="Bold"><b>B</b></button>
+                <button type="button" class="tb-btn" data-cmd="italic" aria-label="Italic" title="Italic"><i>I</i></button>
+                <button type="button" class="tb-btn" data-cmd="underline" aria-label="Underline" title="Underline"><u>U</u></button>
+                <button type="button" class="tb-btn" data-cmd="strikeThrough" aria-label="Strikethrough" title="Strikethrough"><s>S</s></button>
+              </div>
+              <div class="tb-group">
+                <select id="fmt-font" class="tb-select tb-font" aria-label="Font for selected text" title="Font for selected text"></select>
+                <label class="tb-field" title="Font size for selected text">
+                  <span class="sr-only">Font size for selected text</span>
+                  <input id="fmt-size" type="number" min="4" max="60" step="0.5" placeholder="pt" inputmode="decimal" aria-label="Font size for selected text, in points" />
+                </label>
+                <label class="tb-color" title="Text color for selected text">
+                  <span class="tb-color-label" aria-hidden="true">A</span>
+                  <span class="sr-only">Text color for selected text</span>
+                  <input id="fmt-color" type="color" value="#000f55" />
+                </label>
+                <label class="tb-color" title="Highlight selected text">
+                  <span class="tb-color-label tb-hl" aria-hidden="true">H</span>
+                  <span class="sr-only">Highlight color for selected text</span>
+                  <input id="fmt-highlight" type="color" value="#fff176" />
+                </label>
+              </div>
+              <div class="tb-group">
+                <button type="button" class="tb-btn" data-cmd="justifyLeft" aria-label="Align left" title="Align left"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M2 6.5h8M2 10h12M2 13.5h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="justifyCenter" aria-label="Align center" title="Align center"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M4 6.5h8M2 10h12M4 13.5h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="justifyRight" aria-label="Align right" title="Align right"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M6 6.5h8M2 10h12M6 13.5h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="justifyFull" aria-label="Justify" title="Justify"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M2 6.5h12M2 10h12M2 13.5h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+              <div class="tb-group">
+                <button type="button" class="tb-btn" data-cmd="insertUnorderedList" aria-label="Bulleted list" title="Bulleted list"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5h8M6 8h8M6 12.5h8M2.5 3.5h.01M2.5 8h.01M2.5 12.5h.01" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="insertOrderedList" aria-label="Numbered list" title="Numbered list"><span aria-hidden="true">1.</span></button>
+                <button type="button" class="tb-btn" data-cmd="outdent" aria-label="Decrease indent" title="Decrease indent"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M7 7h7M7 11h7M5 6 2 8.5 5 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="indent" aria-label="Increase indent" title="Increase indent"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 3h12M7 7h7M7 11h7M2 6l3 2.5L2 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+              <div class="tb-group">
+                <button type="button" class="tb-btn" data-cmd="insertImage" aria-label="Insert image" title="Insert image"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2.5 3h11v10h-11zM2.5 11l3.5-3.5 3 3 2-2 2.5 2.5M10.5 6h.01" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="pageBreak" aria-label="Insert page break" title="Insert page break"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h3M7 8h2M11 8h3M4 2v3.5h8V2M4 14v-3.5h8V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="tb-btn" data-cmd="removeFormat" aria-label="Clear formatting" title="Clear formatting"><span aria-hidden="true">T<sub>x</sub></span></button>
+              </div>
+              <input id="fmt-image-file" type="file" accept="image/*" multiple hidden />
+            </div>
+
+            <div id="image-tools" class="editor-toolbar image-tools" role="toolbar" aria-label="Selected image. Drag the corner handle to resize, drag the image to move it." hidden>
+              <strong class="tb-title">Image</strong>
+              <label class="tb-field tb-range">Size
+                <input id="img-size" type="range" min="10" max="100" step="1" value="50" aria-label="Image width, percent of the page" />
+              </label>
+              <div class="tb-group">
+                <button type="button" class="tb-btn tb-text" data-img="inline" title="Place in line with text">In line</button>
+                <button type="button" class="tb-btn tb-text" data-img="center" title="Centered on its own line">Center</button>
+                <button type="button" class="tb-btn tb-text" data-img="float-left" title="Float left, text wraps around">Wrap left</button>
+                <button type="button" class="tb-btn tb-text" data-img="float-right" title="Float right, text wraps around">Wrap right</button>
+              </div>
+              <button type="button" class="tb-btn tb-text tb-danger" data-img="delete">Remove</button>
+            </div>
+
             <div class="flex-1 page-container">
               <div class="page-a margined lines">
                 <div contenteditable="true" class="top-margin" role="textbox" aria-label="Page header text"></div>
@@ -263,6 +340,7 @@
                 </div>
                 <div class="overlay"></div>
               </div>
+              <div id="img-handle" class="img-handle" hidden aria-hidden="true" title="Drag to resize"></div>
             </div>
 
             <div>
@@ -270,6 +348,12 @@
                 Draw a diagram
               </button>
             </div>
+
+            <details class="page-preview" open>
+              <summary>Page preview <span id="page-preview-count" class="page-count" aria-live="polite">1 page</span></summary>
+              <p class="note-text">Shows how your text will be split into pages. Use the page-break button in the toolbar to start a new page yourself.</p>
+              <div id="page-preview-list" class="page-preview-list"></div>
+            </details>
           </div>
 
           <div class="customization-col">
@@ -339,7 +423,7 @@
             <fieldset>
               <legend>Page &amp; Text Options</legend>
 
-              <div class="category-grid">
+              <div class="category-grid grid-3">
                 <div class="postfix-input" data-postfix="pt">
                   <label for="font-size">Font Size</label>
                   <input id="font-size" min="1" max="30" step="0.5" value="10" type="number" inputmode="decimal" />
@@ -356,6 +440,9 @@
                   <label class="block" for="page-size">Page Size</label>
                   <select id="page-size">
                     <option selected value="a4">A4</option>
+                    <option value="a5">A5</option>
+                    <option value="letter">Letter</option>
+                    <option value="legal">Legal</option>
                   </select>
                 </div>
                 <div>
@@ -376,6 +463,14 @@
                     <option value="4">Very High</option>
                   </select>
                 </div>
+                <div>
+                  <label class="block" for="realism">Handwriting Realism</label>
+                  <select id="realism">
+                    <option selected value="off">Off</option>
+                    <option value="subtle">Subtle</option>
+                    <option value="natural">Natural</option>
+                  </select>
+                </div>
               </div>
             </fieldset>
 
@@ -394,6 +489,45 @@
                 <div class="postfix-input" data-postfix="px">
                   <label for="letter-spacing">Letter Spacing</label>
                   <input id="letter-spacing" min="-5" max="40" value="0" type="number" inputmode="numeric" />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Page Layout</legend>
+
+              <div class="category-grid">
+                <div>
+                  <label class="block" for="paper-template">Paper Template</label>
+                  <select id="paper-template">
+                    <option selected value="ruled">Ruled</option>
+                    <option value="grid">Grid</option>
+                    <option value="dotted">Dotted</option>
+                    <option value="blank">Blank</option>
+                  </select>
+                </div>
+                <div class="postfix-input" data-postfix="em">
+                  <label for="line-height">Line Height</label>
+                  <input id="line-height" min="1" max="3" step="0.1" value="1.5" type="number" inputmode="decimal" />
+                </div>
+              </div>
+              <p class="note-text">Page gaps (space between the text and the paper edge)</p>
+              <div class="category-grid gap-grid">
+                <div class="postfix-input" data-postfix="px">
+                  <label for="margin-top">Top</label>
+                  <input id="margin-top" min="0" max="200" step="1" value="50" type="number" inputmode="numeric" />
+                </div>
+                <div class="postfix-input" data-postfix="px">
+                  <label for="margin-left">Left</label>
+                  <input id="margin-left" min="0" max="200" step="1" value="50" type="number" inputmode="numeric" />
+                </div>
+                <div class="postfix-input" data-postfix="px">
+                  <label for="margin-right">Right</label>
+                  <input id="margin-right" min="0" max="200" step="1" value="5" type="number" inputmode="numeric" />
+                </div>
+                <div class="postfix-input" data-postfix="px">
+                  <label for="margin-bottom">Bottom</label>
+                  <input id="margin-bottom" min="0" max="200" step="1" value="0" type="number" inputmode="numeric" />
                 </div>
               </div>
             </fieldset>
@@ -478,8 +612,12 @@
         <li>30+ handwriting fonts, including Hindi, Urdu, Arabic, Chinese, Japanese and Korean options</li>
         <li>Upload your own handwriting as a TTF or OTF font</li>
         <li>Blue, black and red ink, adjustable font size, word spacing and letter spacing</li>
-        <li>Ruled paper and margin toggles, plus shadow and scanner page effects</li>
-        <li>Draw simple diagrams and add them to the page</li>
+        <li>Rich text editing: headings, bold, italic, underline, lists, alignment and a different font, size, color or highlight for any selection</li>
+        <li>Add images to the page: resize, drag, center or wrap text around them</li>
+        <li>Page layout controls: A4, A5, Letter or Legal paper, ruled, grid, dotted or blank templates, line height and top, left, right and bottom page gaps</li>
+        <li>Live page preview with automatic pagination and manual page breaks</li>
+        <li>Ruled paper and margin toggles, plus shadow and scanner page effects, and an optional realistic-imperfection mode</li>
+        <li>Draw diagrams with pen, eraser, shapes and undo, then add them to the page</li>
         <li>Multi-page output with one-click PDF download and adjustable resolution</li>
         <li>Light and dark mode, and it works on phones and tablets</li>
       </ul>
@@ -594,15 +732,37 @@
   <!-- Drawing dialog -->
   <div class="draw-container popup-container" role="dialog" aria-modal="true" aria-label="Draw a diagram">
     <button type="button" class="close-button" aria-label="Close drawing canvas">&times;</button>
-    <div class="display-flex responsive-flex">
-      <canvas id="diagram-canvas" style="background-color: #fff;" height="300" width="600"
-        aria-label="Drawing canvas"></canvas>
-      <div class="flex-1 buttons-container padding-around">
-        <button type="button" id="add-to-paper-button">Add to Paper</button>
-        <button type="button" id="draw-download-button">Download Image</button>
-        <input type="file" id="image-to-add-in-canvas" accept="image/x-png,image/jpeg" hidden="hidden" />
-        <button type="button" id="add-new-image-button">Add bg image</button>
-        <button type="button" id="clear-draw-canvas" class="blue-button">Clear Canvas</button>
+    <div class="draw-layout">
+      <div class="draw-tools" role="toolbar" aria-label="Drawing tools">
+        <div class="tool-group" id="draw-tool-group">
+          <button type="button" class="tool-btn" data-tool="pen" aria-pressed="true">Pen</button>
+          <button type="button" class="tool-btn" data-tool="eraser" aria-pressed="false">Eraser</button>
+          <button type="button" class="tool-btn" data-tool="line" aria-pressed="false">Line</button>
+          <button type="button" class="tool-btn" data-tool="arrow" aria-pressed="false">Arrow</button>
+          <button type="button" class="tool-btn" data-tool="rect" aria-pressed="false">Rectangle</button>
+          <button type="button" class="tool-btn" data-tool="ellipse" aria-pressed="false">Ellipse</button>
+        </div>
+        <label class="draw-field">Size
+          <input type="range" id="draw-size" min="1" max="30" value="2" />
+        </label>
+        <label class="draw-field">Color
+          <input type="color" id="draw-color" value="#000f55" />
+        </label>
+        <div class="tool-group">
+          <button type="button" id="draw-undo" class="tool-btn">Undo</button>
+          <button type="button" id="draw-redo" class="tool-btn">Redo</button>
+        </div>
+      </div>
+      <div class="display-flex responsive-flex">
+        <canvas id="diagram-canvas" style="background-color: #fff;" height="300" width="600"
+          aria-label="Drawing canvas"></canvas>
+        <div class="flex-1 buttons-container padding-around">
+          <button type="button" id="add-to-paper-button">Add to Paper</button>
+          <button type="button" id="draw-download-button">Download Image</button>
+          <input type="file" id="image-to-add-in-canvas" accept="image/x-png,image/jpeg" hidden="hidden" />
+          <button type="button" id="add-new-image-button">Add bg image</button>
+          <button type="button" id="clear-draw-canvas" class="blue-button">Clear Canvas</button>
+        </div>
       </div>
     </div>
   </div>

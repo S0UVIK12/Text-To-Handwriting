@@ -257,7 +257,10 @@ ul.info-ul > li {
 }
 
 .left-margin-and-content {
-  min-height: calc(100% - 50px);
+  min-height: calc(100% - var(--top-margin, 50px));
+}
+.page-a:not(.margined) .left-margin-and-content {
+  min-height: 100%;
 }
 
 .page-container {
@@ -265,8 +268,9 @@ ul.info-ul > li {
 }
 
 .page-a {
-  width: 400px;
-  height: calc(11.7 * 400px / 8.3); /* A4 Ratio */
+  --line-height: 1.5em;
+  width: var(--page-w, 400px);
+  height: calc(var(--page-w, 400px) * var(--page-ratio, 1.4142857)); /* A4 ratio by default */
   background: #fff;
   border: 1px solid var(--field-borders);
   font-size: 10pt;
@@ -274,7 +278,7 @@ ul.info-ul > li {
   top: 0px;
   font-family: var(--handwriting-font);
   color: var(--ink-color);
-  line-height: 1.5em;
+  line-height: var(--line-height);
   overflow-y: auto;
   scrollbar-color: transparent;
   scrollbar-width: thin;
@@ -293,13 +297,26 @@ ul.info-ul > li {
 .page-a.lines .paper-content {
   background-image: linear-gradient(#999 0.05em, transparent 0.1em);
   background-color: unset !important;
-  background-size: 100% 1.5em;
+  background-size: 100% var(--line-height);
+}
+/* paper templates */
+.page-a.lines[data-template='grid'] .paper-content {
+  background-image: linear-gradient(#999 0.05em, transparent 0.1em),
+    linear-gradient(90deg, #bbb 0.05em, transparent 0.1em);
+  background-size: 100% var(--line-height), var(--line-height) 100%;
+}
+.page-a.lines[data-template='dotted'] .paper-content {
+  background-image: radial-gradient(circle at center, #777 0.07em, transparent 0.1em);
+  background-size: var(--line-height) var(--line-height);
+  background-position: 0 calc(var(--line-height) / -2);
+}
+.page-a.lines[data-template='blank'] .paper-content {
+  background-image: none;
 }
 
 .margined .paper-content {
-  padding: 5px;
+  padding: 5px var(--right-margin, 5px) 5px calc(var(--left-margin, 50px) + 5px);
   margin: 0px;
-  padding-left: 55px;
 }
 
 .left-margin,
@@ -308,7 +325,7 @@ ul.info-ul > li {
 }
 
 .margined .top-margin {
-  height: 50px;
+  height: var(--top-margin, 50px);
   border-bottom: 2px solid pink;
   width: 100%;
   display: block;
@@ -316,12 +333,12 @@ ul.info-ul > li {
 }
 
 .margined .left-margin {
-  width: 50px;
+  width: var(--left-margin, 50px);
   height: calc(100%);
   display: inline-block;
   border-right: 2px solid pink;
   top: 0px;
-  padding-top: 50px;
+  padding-top: var(--top-margin, 50px);
   overflow-x: hidden;
   position: absolute;
   left: 0;

@@ -9,6 +9,9 @@ import {
   deleteAll
 } from './generate-images.mjs';
 import { setInkColor, toggleDrawCanvas } from './utils/draw.mjs';
+import './editor.mjs';
+import './layout.mjs';
+import './preview.mjs';
 
 
 const pageEl = document.querySelector('.page-a');

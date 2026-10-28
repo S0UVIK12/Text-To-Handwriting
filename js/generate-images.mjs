@@ -4,6 +4,8 @@ import {
   renderOutput
 } from './utils/generate-utils.mjs';
 import { createPDF } from './utils/helpers.mjs';
+import { paginate, applyRealism } from './utils/paginate.mjs';
+import { deselectImage } from './editor.mjs';
 
 const pageEl = document.querySelector('.page-a');
 let outputImages = [];
@@ -31,6 +33,7 @@ async function convertDIVToImage() {
     canvas.getContext('2d').putImageData(imageData, 0, 0);
   }
 
+  canvas.dataset.paper = document.querySelector('#page-size').value;
   outputImages.push(canvas);
   // Displaying no. of images on addition
   if (outputImages.length >= 1) {
@@ -41,55 +44,44 @@ async function convertDIVToImage() {
 
 /**
  * This is the function that gets called on clicking "Generate Image" button.
+ * The content is split into pages (see utils/paginate.mjs); each page is then
+ * rendered to its own image.
  */
 export async function generateImages() {
+  deselectImage();
+  const paperContentEl = document.querySelector('.page-a .paper-content');
+  const initialPaperContent = paperContentEl.innerHTML;
+  const realism = document.querySelector('#realism').value;
+
+  // Measure before the render-time style tweaks below.
+  const pages = paginate(pageEl);
+
   applyPaperStyles();
   pageEl.scroll(0, 0);
+  pageEl.classList.add('is-rendering');
 
-  const paperContentEl = document.querySelector('.page-a .paper-content');
-  const scrollHeight = paperContentEl.scrollHeight;
-  const clientHeight = 514; // height of .paper-content when there is no content
+  const needsRebuild =
+    pages.length > 1 ||
+    realism !== 'off' ||
+    initialPaperContent.includes('data-page-break');
 
-  const totalPages = Math.ceil(scrollHeight / clientHeight);
-
-  if (totalPages > 1) {
-    // For multiple pages
-    if (paperContentEl.innerHTML.includes('<img')) {
-      alert(
-        "You're trying to generate more than one page, Images and some formatting may not work correctly with multiple images" // eslint-disable-line max-len
-      );
-    }
-    const initialPaperContent = paperContentEl.innerHTML;
-    const splitContent = initialPaperContent.split(/(\s+)/);
-
-    // multiple images
-    let wordCount = 0;
-    for (let i = 0; i < totalPages; i++) {
-      paperContentEl.innerHTML = '';
-      const wordArray = [];
-      let wordString = '';
-
-      while (
-        paperContentEl.scrollHeight <= clientHeight &&
-        wordCount <= splitContent.length
-      ) {
-        wordString = wordArray.join(' ');
-        wordArray.push(splitContent[wordCount]);
-        paperContentEl.innerHTML = wordArray.join(' ');
-        wordCount++;
+  try {
+    if (needsRebuild) {
+      for (const html of pages) {
+        paperContentEl.innerHTML = applyRealism(html, realism);
+        pageEl.scrollTo(0, 0);
+        await convertDIVToImage();
       }
-      paperContentEl.innerHTML = wordString;
-      wordCount--;
-      pageEl.scrollTo(0, 0);
+    } else {
+      // single plain page: render the editor as it is
       await convertDIVToImage();
-      paperContentEl.innerHTML = initialPaperContent;
     }
-  } else {
-    // single image
-    await convertDIVToImage();
+  } finally {
+    if (needsRebuild) paperContentEl.innerHTML = initialPaperContent;
+    pageEl.classList.remove('is-rendering');
+    removePaperStyles();
   }
 
-  removePaperStyles();
   renderOutput(outputImages);
   setRemoveImageListeners();
 }

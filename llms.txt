@@ -19,6 +19,12 @@ Textor helps students, teachers, professionals, and creators generate authentic 
 * Font Size Adjustment
 * Letter and Word Spacing Controls
 * Paper Background Customization
+* Rich Text Editing (headings, lists, per-selection fonts, sizes and colors)
+* Images on the Page (resize, center, wrap text)
+* Paper Sizes (A4, A5, Letter, Legal) and Templates (ruled, grid, dotted, blank)
+* Adjustable Page Gaps and Line Height
+* Live Multi-page Preview and Manual Page Breaks
+* Drawing Tools (pen, eraser, shapes, undo)
 * Assignment and Project Creation
 
 ## Documentation
